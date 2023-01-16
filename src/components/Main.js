@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { promises } from 'tar/lib/read-entry';
 import api from '../utils/API';
+import Card from './Card';
 
 export default function Main (props) {
+    const {avatarPopup, profilePopup, addPopup} = props;
     const [userName, setUserName] = useState("");
     const [userJob, setUserJob] = useState("");
     const [userAvatar, setUserAvatar] = useState("");
@@ -28,21 +30,33 @@ export default function Main (props) {
     return(
         <div className="content">
         <section className="profile">
-          <div alt="Аватар пользователя" className="profile__avatar" src={userAvatar}/>
+          <div onClick={avatarPopup} alt="Аватар пользователя" className="profile__avatar" src={userAvatar}/>
           <div className="profile__info">
             <h1 className="profile__name">{userName}</h1>
             <button
+              onClick={profilePopup}
               className="profile__button profile__button_edit opacity"
               type="button"
             />
             <p className="profile__job">{userJob}</p>
           </div>
           <button
+            onClick={addPopup}
             className="profile__button profile__button_add opacity"
             type="button"
           />
         </section>
-        <ul className="cards" />
+        <ul className="cards">{cards.map((card) => (
+        <Card
+          key = {card._id}
+          link = {card.link}
+          name={card.name}
+          likes={card.likes.length}
+          card={card}
+          cardClick={props.cardClick}
+          />
+        ))}
+        </ul>
       </div> 
-    )
+    );
 }

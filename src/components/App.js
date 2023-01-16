@@ -1,80 +1,97 @@
-import '.././index.css';
+import React, { useState } from 'react';
 
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
+import ImagePopup from './ImagePopup';
+import PopupWithForm from './PopupWithForm';
+
 
 function App() {
+  const [editAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [editProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [addCardPopupOpen, setAddCardPopupOpen] = useState(false);
+  const [ImagePopupOpen, setImagePopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({});
+
+  function handleAvatarPopupClick() {
+    setEditAvatarPopupOpen(true);
+  }
+
+  function handleProfilePopupClick() {
+    setEditProfilePopupOpen(true);
+  }
+
+  function handleAddCardPopupClick() {
+    setAddCardPopupOpen(true);
+  }
+
+function closePopup() {
+  setEditAvatarPopupOpen(false);
+  setEditProfilePopupOpen(false);
+  setAddCardPopupOpen(false);
+  setImagePopupOpen(false);
+}
+
+function handleCardClick(card) {
+  setImagePopupOpen(true);
+  setSelectedCard({
+    name: card.name,
+    link: card.link,
+  });
+}
+
   return (
     <>
     <div className="page">
     <Header />
-    <Main />
+    <Main
+    profilePopup={handleProfilePopupClick}
+    addPopup={handleAddCardPopupClick}
+    avatarPopup={handleAvatarPopupClick}
+    cardClick={handleCardClick}
+     />
     <Footer />
-    <div className="popup popup_type_edit">
-      <div className="popup__container">
-        <button
-          className="popup__button popup__button_close opacity"
-          type="button"
-        />
-        <h3 className="popup__title">Редактировать профиль</h3>
-        <form
-          className="form form_type_edit"
-          id="form__edit"
-          name="form__edit"
-          method="POST"
-          noValidate=""
-        >
-          <fieldset className="form__set">
-            <label className="form__field">
-              <input
-                className="form__input form__input_type_name"
-                type="text"
-                id="editName"
-                name="name"
-                defaultValue=""
-                minLength={2}
-                maxLength={40}
-                required=""
-              />
-              <span id="editName-error" className="error" />
-            </label>
-            <label className="form__field">
-              <input
-                className="form__input form__input_type_job"
-                type="text"
-                id="editJob"
-                name="job"
-                defaultValue=""
-                minLength={2}
-                maxLength={200}
-                required=""
-              />
-              <span id="editJob-error" className="error" />
-            </label>
-            <button className="popup__button popup__button_submit" type="submit">
-              Сохранить
-            </button>
-          </fieldset>
-        </form>
-      </div>
-    </div>
-    <div className="popup popup_type_add-card">
-      <div className="popup__container">
-        <button
-          className="popup__button popup__button_close popup__button_close_add opacity"
-          type="button"
-        />
-        <h3 className="popup__title">Новое место</h3>
-        <form
-          className="form form_type_add-card"
-          id="form__add-card"
-          name="form__add-card"
-          noValidate=""
-        >
-          <fieldset className="form__set">
-            <label className="form__field">
-              <input
+    <PopupWithForm
+    name="profile" 
+    opened={editProfilePopupOpen}
+    title="Редактировать профиль"
+    buttonText="Сохранить"
+    closed={closePopup}
+    >
+      <input
+        className = "form__input form__input_type_name"
+        type = "text"
+        id = "editName"
+        name = "name"
+        defaultValue = ""
+        minLength = {2}
+        maxLength = {40}
+        required = "" />
+        <span 
+          id = "editName-error"
+          className = "error" / >
+      <input
+        className = "form__input form__input_type_job"
+        type = "text"
+        id = "editJob"
+        name = "job"
+        defaultValue = ""
+        minLength = {2}
+        maxLength = {200}
+        required = "" />
+          <span 
+            id = "editJob-error"
+            className = "error" / >
+      </PopupWithForm>
+      <PopupWithForm
+      name="add-card" 
+      opened={addCardPopupOpen}
+      title="Новое место"
+      buttonText="Сохранить"
+      closed={closePopup}
+      >
+        <input
                 className="form__input form__input_type_title"
                 type="text"
                 id="addNameCard"
@@ -85,8 +102,8 @@ function App() {
                 required=""
               />
               <span id="addNameCard-error" className="error" />
-            </label>
-            <label className="form__field">
+            
+            
               <input
                 className="form__input form__input_type_link"
                 type="url"
@@ -96,56 +113,27 @@ function App() {
                 required=""
               />
               <span id="addLinkCard-error" className="error" />
-            </label>
-            <button className="popup__button popup__button_submit" type="submit">
-              Создать
-            </button>
-          </fieldset>
-        </form>
-      </div>
-    </div>
-    <div className="popup popup_type_full">
-      <figure className="popup__full">
-        <button
-          className="popup__button popup__button_close popup__button_close_full opacity"
-          type="button"
-        />
-        <img className="popup__image" />
-        <figcaption className="popup__caption" />
-      </figure>
-    </div>
-    <div className="popup popup_type_del">
-      <div className="popup__container">
-        <button
-          className="popup__button popup__button_close popup__button_close_del opacity"
-          type="button"
-        />
-        <h3 className="popup__title">Вы уверены?</h3>
-        <form className="form form_type_delete-card" name="form_delete-card">
-          <fieldset className="form__set">
-            <button className="popup__button popup__button_submit" type="submit">
-              Да
-            </button>
-          </fieldset>
-        </form>
-      </div>
-    </div>
-    <div className="popup popup_type_avatar">
-      <div className="popup__container">
-        <button
-          className="popup__button popup__button_close popup__button_close_del opacity"
-          type="button"
-        />
-        <h3 className="popup__title">Обновить аватар</h3>
-        <form
-          className="form form_type_avatar"
-          id="form__avatar"
-          name="form__avatar"
-          noValidate=""
-        >
-          <fieldset className="form__set">
-            <label className="form__field">
-              <input
+      </PopupWithForm>
+      <ImagePopup
+      name="fullscreen-image"
+      card={selectedCard}
+      closed={closePopup}
+      opened={ImagePopupOpen}
+      />
+      <PopupWithForm
+      name="delete-card" 
+      title="Вы уверены?"
+      buttonText="Да"
+      closed={closePopup}
+      />
+      <PopupWithForm
+       name="avatar" 
+       opened={editAvatarPopupOpen}
+       title="Обновить аватар"
+       buttonText="Сохранить"
+       closed={closePopup}
+      >
+<input
                 className="form__input form__input_type_link"
                 type="url"
                 id="avatarLink"
@@ -154,15 +142,7 @@ function App() {
                 required=""
               />
               <span id="avatarLink-error" className="error" />
-            </label>
-            <button className="popup__button popup__button_submit" type="submit">
-              Сохранить
-            </button>
-          </fieldset>
-        </form>
-      </div>
-    </div>
-    <template id="template-card" />
+      </PopupWithForm>
     </div></>
     
   );
