@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import Api from '../utils/api';
+import Api from '../utils/api'
 import Card from './Card';
 
 export default function Main (props) {
