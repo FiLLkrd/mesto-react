@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import Api from '../utils/api'
+import api from '../utils/api'
 import Card from './Card';
 
 export default function Main (props) {
@@ -12,8 +12,8 @@ export default function Main (props) {
 
     useEffect(() => {
         Promise.all([
-            Api.getUserInfo(),
-            Api.getCards()
+            api.getUserInfo(),
+            api.getCards()
         ])
         .then(([profileInfo, cards]) =>{
             setUserName(profileInfo.name);
