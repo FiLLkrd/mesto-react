@@ -18,12 +18,15 @@ export default function PopupWithForm(props) {
             className="form"
             name={name}
             noValidate>
+                <fieldset className="form__set">
                 {children}
                 <button 
                 type="submit"
                 className="popup__button popup__button_submit">
                     {buttonText || "Сохранить"}
                 </button>
+            </fieldset>
+                
             </form>
             </div>    
         </div>

@@ -9,7 +9,7 @@ export default function Card(props) {
     }
 
     return (
-        <div className="card">
+        <article className="card">
             <img 
             alt={name} 
             className="card__image" 
@@ -19,9 +19,12 @@ export default function Card(props) {
             <button type="button" className="card__trash"/>
             <div className="card__signature">
                 <h2 className="card__title">{name}</h2>
+                <div>
+                <button className="card__like" type="button"/>
+                <p className="card__number-counter">{likes}</p>
+                </div>
             </div>
-            <button className="card__like" type="button"/>
-            <span className="card__number-counter">{likes}</span>
-        </div>
+            
+        </article>
     );
 }

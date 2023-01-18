@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { promises } from 'tar/lib/read-entry';
-import api from '../utils/API';
+
+import api from '../utils/api';
 import Card from './Card';
 
 export default function Main (props) {
@@ -8,10 +8,10 @@ export default function Main (props) {
     const [userName, setUserName] = useState("");
     const [userJob, setUserJob] = useState("");
     const [userAvatar, setUserAvatar] = useState("");
-    const [cards, setCards] = useState("[]");
+    const [cards, setCards] = useState([]);
 
     useEffect(() => {
-        promises.all([
+        Promise.all([
             api.getUserInfo(),
             api.getCards()
         ])
@@ -54,8 +54,7 @@ export default function Main (props) {
           likes={card.likes.length}
           card={card}
           cardClick={props.cardClick}
-          />
-        ))}
+          />))}
         </ul>
       </div> 
     );

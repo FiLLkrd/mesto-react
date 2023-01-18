@@ -7,6 +7,7 @@ import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
 
 
+
 function App() {
   const [editAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [editProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
