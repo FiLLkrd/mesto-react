@@ -92,27 +92,25 @@ function handleCardClick(card) {
       closed={closePopup}
       >
         <input
-                className="form__input form__input_type_title"
-                type="text"
-                id="addNameCard"
-                name="title"
-                placeholder="Название"
-                minLength={2}
-                maxLength={30}
-                required=""
-              />
-              <span id="addNameCard-error" className="error" />
-            
-            
-              <input
-                className="form__input form__input_type_link"
-                type="url"
-                id="addLinkCard"
-                name="url"
-                placeholder="Ссылка на картинку"
-                required=""
-              />
-              <span id="addLinkCard-error" className="error" />
+        className="form__input form__input_type_title"
+        type="text"
+        id="addNameCard"
+        name="title"
+        placeholder="Название"
+        minLength={2}
+        maxLength={30}
+        required=""
+        />
+          <span id="addNameCard-error" className="error" />
+        <input
+          className="form__input form__input_type_link"
+          type="url"
+          id="addLinkCard"
+          name="url"
+          placeholder="Ссылка на картинку"
+          required=""
+          />
+            <span id="addLinkCard-error" className="error" />
       </PopupWithForm>
       <ImagePopup
       name="fullscreen-image"
@@ -133,18 +131,18 @@ function handleCardClick(card) {
        buttonText="Сохранить"
        closed={closePopup}
       >
-<input
-                className="form__input form__input_type_link"
-                type="url"
-                id="avatarLink"
-                name="avatar"
-                placeholder="Ссылка на картинку"
-                required=""
-              />
-              <span id="avatarLink-error" className="error" />
+        <input
+          className="form__input form__input_type_link"
+          type="url"
+          id="avatarLink"
+          name="avatar"
+          placeholder="Ссылка на картинку"
+          required=""
+          />
+            <span id="avatarLink-error" className="error" />
       </PopupWithForm>
-    </div></>
-    
+    </div>
+    </>
   );
 }
 

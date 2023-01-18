@@ -10,14 +10,14 @@ export default function ImagePopup(props) {
             <div className="popup__full">
                 <button 
                 type="button"
-                className="popup__button popup__button_close popup__button_close_full opacity"
+                className="popup__button popup__button_close opacity"
                 onClick={closed}
                 />
             <img
             src={card.link}
             className="popup__image"
             alt={card.name} />
-            <figcaption className="popup__caption">{card.name}</figcaption>
+            <p className="popup__caption">{card.name}</p>
         </div>
     </div>
     );
