@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
+import api from '../utils/api';
+import EditAvatarPopup from './EditAvatarPopup';
+import EditProfilePopup from './EditProfilePopup';
+import CurrentUserContext from '../contexts/CurrentUserContext';
 
 
 
@@ -14,6 +18,19 @@ function App() {
   const [addCardPopupOpen, setAddCardPopupOpen] = useState(false);
   const [ImagePopupOpen, setImagePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    Promise.all([
+      api.getUserInfo(),
+    ])
+    .then(([profileInfo]) =>{
+      setCurrentUser(profileInfo);
+    })
+    .catch((err) => {
+      console.log(err);
+  });
+}, []);
 
   function handleAvatarPopupClick() {
     setEditAvatarPopupOpen(true);
@@ -42,9 +59,22 @@ function handleCardClick(card) {
   });
 }
 
+function handleEditAvatar({ avatar }) {
+  api
+      .editAvarar(avatar)
+      .then((res) => {
+          setCurrentUser(res);
+          closePopup();
+      })
+      .catch((err) => {
+          console.log(err);
+      });
+}
+
   return (
     <>
     <div className="page">
+    <CurrentUserContext.Provider value={currentUser}>
     <Header />
     <Main
     profilePopup={handleProfilePopupClick}
@@ -53,38 +83,10 @@ function handleCardClick(card) {
     cardClick={handleCardClick}
      />
     <Footer />
-    <PopupWithForm
-    name="profile" 
+    <EditProfilePopup 
     opened={editProfilePopupOpen}
-    title="Редактировать профиль"
-    buttonText="Сохранить"
     closed={closePopup}
-    >
-      <input
-        className = "form__input form__input_type_name"
-        type = "text"
-        id = "editName"
-        name = "name"
-        defaultValue = ""
-        minLength = {2}
-        maxLength = {40}
-        required = "" />
-        <span 
-          id = "editName-error"
-          className = "error" / >
-      <input
-        className = "form__input form__input_type_job"
-        type = "text"
-        id = "editJob"
-        name = "job"
-        defaultValue = ""
-        minLength = {2}
-        maxLength = {200}
-        required = "" />
-          <span 
-            id = "editJob-error"
-            className = "error" / >
-      </PopupWithForm>
+    />
       <PopupWithForm
       name="add-card" 
       opened={addCardPopupOpen}
@@ -125,23 +127,12 @@ function handleCardClick(card) {
       buttonText="Да"
       closed={closePopup}
       />
-      <PopupWithForm
-       name="avatar" 
-       opened={editAvatarPopupOpen}
-       title="Обновить аватар"
-       buttonText="Сохранить"
-       closed={closePopup}
-      >
-        <input
-          className="form__input form__input_type_link"
-          type="url"
-          id="avatarLink"
-          name="avatar"
-          placeholder="Ссылка на картинку"
-          required=""
-          />
-            <span id="avatarLink-error" className="error" />
-      </PopupWithForm>
+      <EditAvatarPopup
+        opened={editAvatarPopupOpen}
+        closed={closePopup}
+        onUpdateAvatar={handleEditAvatar}
+      />
+      </CurrentUserContext.Provider>
     </div>
     </>
   );
