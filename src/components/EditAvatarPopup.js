@@ -10,7 +10,7 @@ export default function EditAvatarPopup (props) {
 
 function handleSubmit(e) {
     e.preventDefault();
-    props.onUpdateAvatar({
+    props.openEditAvatar({
         avatar: avatarRef.current.value,
     });
 }
@@ -31,7 +31,7 @@ return(
           name="avatar"
           placeholder="Ссылка на картинку"
           required=""
-          ref={useRef}
+          ref={avatarRef}
           />
             <span id="avatarLink-error" className="error" />
       </PopupWithForm>

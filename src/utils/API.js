@@ -85,6 +85,22 @@ class API {
         });
         return this._checkError(res);
     }
+
+    async changeLikeCard(cardId, liked) {
+        if (liked) {
+            const res = await fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+                method: "PUT",
+                headers: this._headers,
+            });
+            return this._checkError(res);
+        } else {
+            const res = await fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+                method: "DELETE",
+                headers: this._headers,
+            });
+            return this._checkError(res);
+        }
+    }
 }
 
 const api = new API({
