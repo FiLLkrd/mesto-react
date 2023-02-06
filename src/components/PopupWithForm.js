@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function PopupWithForm(props) {
-    const {name, opened, closed, title, children, buttonText} = props;
+    const {onSubmit, name, opened, closed, title, children, buttonText} = props;
     return (
         <div className={`popup popup_type_${name} ${
             opened ? "popup_opened" : ""
@@ -17,6 +17,7 @@ export default function PopupWithForm(props) {
             <form 
             className="form"
             name={name}
+            onSubmit={onSubmit}
             noValidate>
                 <fieldset className="form__set">
                 {children}

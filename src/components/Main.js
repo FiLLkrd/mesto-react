@@ -3,24 +3,24 @@ import CurrentUserContext from '../contexts/CurrentUserContext.js';
 import Card from './Card';
 
 export default function Main (props) {
-    const {avatarPopup, profilePopup, addPopup} = props;
+    const {onAvatarPopup, onProfilePopup, onAddPopup} = props;
     const currentUser = useContext(CurrentUserContext);
 
     return(
         <div className="content">
         <section className="profile">
-          <div onClick={avatarPopup} alt="Аватар пользователя" className="profile__avatar" src={currentUser.avatar}/>
+          <img onClick={onAvatarPopup} alt="Аватар" className="profile__avatar" src={currentUser.avatar} />
           <div className="profile__info">
             <h1 className="profile__name">{currentUser.name}</h1>
             <button
-              onClick={profilePopup}
+              onClick={onProfilePopup}
               className="profile__button profile__button_edit opacity"
               type="button"
             />
             <p className="profile__job">{currentUser.about}</p>
           </div>
           <button
-            onClick={addPopup}
+            onClick={onAddPopup}
             className="profile__button profile__button_add opacity"
             type="button"
           />

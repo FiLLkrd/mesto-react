@@ -33,7 +33,7 @@ class API {
             headers: this._headers,
             body: JSON.stringify({
                 name: data.name,
-                about: data.job
+                about: data.about
             })
         });
         return this._checkError(res);
@@ -45,7 +45,7 @@ class API {
             headers: this._headers,
             body: JSON.stringify({
                 name: data.title,
-                link: data.url,
+                link: data.link,
             })
         });
         return this._checkError(res);
@@ -59,28 +59,12 @@ class API {
         return this._checkError(res);
     }
 
-    async addLike(id){
-        const res = await fetch(`${this._baseUrl}/cards/${id}/likes`, {
-            method: "PUT",
-            headers: this._headers
-        });
-        return this._checkError(res);
-    }
-
-    async deleteLike(id) {
-        const res = await fetch(`${this._baseUrl}/cards/${id}/likes`, {
-            method: "DELETE",
-            headers: this._headers
-        });
-        return this._checkError(res);
-    }
-
-    async editAvatar(data){
+    async editAvatar(link){
         const res = await fetch(`${this._baseUrl}/users/me/avatar`, {
             method: "PATCH",
             headers: this._headers,
             body: JSON.stringify({
-                avatar: data.avatar
+                avatar: link,
             })
         });
         return this._checkError(res);
@@ -94,11 +78,11 @@ class API {
             });
             return this._checkError(res);
         } else {
-            const res = await fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+            const res_2 = await fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
                 method: "DELETE",
                 headers: this._headers,
             });
-            return this._checkError(res);
+            return this._checkError(res_2);
         }
     }
 }

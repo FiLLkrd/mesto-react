@@ -14,15 +14,15 @@ export default function Card(props) {
     }`;
 
     function handleClick() {
-        props.cardClick(props.card);
+        props.onCardClick(props.card);
     }
 
     function handleLikeClick() {
-        props.cardLike(props.card);
+        props.onCardLike(props.card);
     }
 
     function handleDeleteClick() {
-        props.cardDelete(props.card);
+        props.onCardDelete(props.card);
     }
 
     return (

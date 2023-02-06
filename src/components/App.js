@@ -63,6 +63,14 @@ function closePopup() {
   setImagePopupOpen(false);
 }
 
+function handleCardClick(card) {
+  setImagePopupOpen(true);
+  setSelectedCard({
+    name: card.name,
+    link: card.link,
+  });
+}
+
 function handleCardDelete(card) {
   api
       .deleteCard(card._id)
@@ -78,7 +86,6 @@ function handleCardDelete(card) {
 
 function handleCardLike(card) {
   const liked = card.likes.some((user) => user._id === currentUser._id);
-  // Отправляем запрос в API и получаем обновлённые данные карточки
   api
       .changeLikeCard(card._id, !liked)
       .then((newCard) => {
@@ -91,17 +98,24 @@ function handleCardLike(card) {
       });
 }
 
-function handleCardClick(card) {
-  setImagePopupOpen(true);
-  setSelectedCard({
-    name: card.name,
-    link: card.link,
-  });
-}
+
 
 function handleEditAvatar({ avatar }) {
   api
-      .editAvarar(avatar)
+      .editAvatar(avatar)
+      .then((res) => {
+          setCurrentUser(res);
+          closePopup();
+      })
+      .catch((err) => {
+          console.log(err);
+      });
+}
+
+function handleEditUser({ name, about }) {
+  setIsRenderLoading(true);
+  api
+      .editProfile({ name, about })
       .then((res) => {
           setCurrentUser(res);
           closePopup();
@@ -130,18 +144,20 @@ function handleAddCard({ title, link }) {
     <Header />
     <Main
     cards={cards}
-    profilePopup={handleProfilePopupClick}
-    addPopup={handleAddCardPopupClick}
-    avatarPopup={handleAvatarPopupClick}
-    cardClick={handleCardClick}
-    cardLike={handleCardLike}
-    cardDelete={handleCardDelete}
+    onProfilePopup={handleProfilePopupClick}
+    onAddPopup={handleAddCardPopupClick}
+    onAvatarPopup={handleAvatarPopupClick}
+    onCardClick={handleCardClick}
+    onCardLike={handleCardLike}
+    onCardDelete={handleCardDelete}
     
      />
     <Footer />
     <EditProfilePopup 
     opened={editProfilePopupOpen}
     closed={closePopup}
+    editUserInfo={handleEditUser}
+    isRenderLoading={isRenderLoading}
     />
     <AddPlacePopup 
     opened={addCardPopupOpen}
