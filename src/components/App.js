@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import Main from "./Main";
 import ImagePopup from "./ImagePopup";
 import PopupWithForm from "./PopupWithForm";
-import api from "../utils/api";
+import apiRequest from '../utils/api'
 import EditAvatarPopup from "./EditAvatarPopup";
 import EditProfilePopup from "./EditProfilePopup";
 import CurrentUserContext from "../contexts/CurrentUserContext";
@@ -22,7 +22,7 @@ function App() {
   const [isRenderLoading, setIsRenderLoading] = useState(false);
 
   useEffect(() => {
-    api
+    apiRequest
       .getUserInfo()
       .then((res) => {
         setCurrentUser(res);
@@ -31,7 +31,7 @@ function App() {
         console.log(err);
       });
 
-    api
+      apiRequest
       .getCards()
       .then((res) => {
         setCards(res);
@@ -69,7 +69,7 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    api
+    apiRequest
       .deleteCard(card._id)
       .then(() => {
         setCards((cardsArr) =>
@@ -83,7 +83,7 @@ function App() {
 
   function handleCardLike(card) {
     const liked = card.likes.some((user) => user._id === currentUser._id);
-    api
+    apiRequest
       .changeLikeCard(card._id, !liked)
       .then((newCard) => {
         setCards((cards) =>
@@ -96,7 +96,7 @@ function App() {
   }
 
   function handleEditAvatar({ avatar }) {
-    api
+    apiRequest
       .editAvatar(avatar)
       .then((res) => {
         setCurrentUser(res);
@@ -109,7 +109,7 @@ function App() {
 
   function handleEditUser({ name, about }) {
     setIsRenderLoading(true);
-    api
+    apiRequest
       .editProfile({ name, about })
       .then((res) => {
         setCurrentUser(res);
@@ -122,7 +122,7 @@ function App() {
 
   function handleAddCard({ title, link }) {
     console.log(title, link);
-    api
+    apiRequest
       .addNewCard({ title, link })
       .then((res) => {
         setCards((cards) => [res, ...cards]);
