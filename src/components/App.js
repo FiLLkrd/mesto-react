@@ -22,24 +22,15 @@ function App() {
   const [isRenderLoading, setIsRenderLoading] = useState(false);
 
   useEffect(() => {
-    apiRequest
-      .getUserInfo()
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-      apiRequest
-      .getCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    Promise.all([
+        apiRequest.getUserInfo(),
+        apiRequest.getCards()
+    ]).then(([userData, cardData]) => {
+        setCurrentUser(userData);
+        setCards(cardData);
+    }).catch(err => console.log(err));
+}, []);
+  
 
   function handleAvatarPopupClick() {
     setEditAvatarPopupOpen(true);

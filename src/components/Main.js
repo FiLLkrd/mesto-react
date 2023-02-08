@@ -9,11 +9,11 @@ export default function Main(props) {
   return (
     <div className="content">
       <section className="profile">
-        <img
+        <div
           onClick={onAvatarPopup}
           alt="Аватар"
           className="profile__avatar"
-          src={currentUser.avatar}
+          style={{ backgroundImage: `url(${currentUser.avatar})` }}
         />
         <div className="profile__info">
           <h1 className="profile__name">{currentUser.name}</h1>
